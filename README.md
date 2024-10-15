@@ -13,8 +13,8 @@ Reinforcement Learning Integration:
 # Model Architecture:
 * The MOEWaitKPolicy class implements the Mixture-of-Experts Wait-k mechanism, allowing the model to leverage multiple experts for different heads of attention.
 * The AdaptiveWaitKModel class integrates the encoder and decoder components, incorporating the adaptive wait-k policy into the translation process.
-* The SimultaneousTranslationModel class encapsulates the entire model architecture, facilitating the forward pass through the network.
-* The model is trained over multiple epochs using the Adam optimizer and Cross-Entropy loss. The training loop involves passing batches through the model, calculating the loss, and updating the weights.n (not working need to tackle this too)
+* The SimultaneousTranslationModel class encapsulates the entire model architecture, facilitating the forward pass through the network. **(not working need to tackle this too)**
+* The model is trained over multiple epochs using the Adam optimizer and Cross-Entropy loss. The training loop involves passing batches through the model, calculating the loss, and updating the weights.n **(not working need to tackle this too)**
 
 # Pending Tasks & Challenges
 * Fix Tensor Size Mismatches: Address the runtime error caused by mismatched tensor dimensions in the MOEWaitKPolicy forward method.
