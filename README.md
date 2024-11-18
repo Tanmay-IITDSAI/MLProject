@@ -74,7 +74,7 @@ The overall objective integrates Self-Critical Sequence Training (SCST), HMT pro
 
 ### HMT Loss
 
-$$ \mathcal{L}_{\text{HMT}} = \mathbb{E}_Z \left[ - \sum_{t=1}^T \log P(x_t \mid z_t) \right] $$
+L_HMT = E_Z [ - Σ_{t=1}^T log P(x_t | z_t) ]
 
 ### SCST Loss
 
