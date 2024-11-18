@@ -18,23 +18,14 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 ### b. Dynamic Wait-k Policy Implementation  
 - Utilized a **flexible wait-k strategy** to dynamically adjust latency based on remaining input length.  
 - Enhanced with HMT to predict sequence likelihoods, improving token generation decisions.  
-
-## Mathematical Foundations
-
-1. **Wait-K Policy**:
-   $$g(t; k) = \min(k + t - 1, |Z|)$$
-
-2. **Latency Metric (AL)**:
-   $$AL = \frac{1}{\tau} \sum_{t=1}^\tau \left[g(t) - t - 1\right] \cdot \frac{|y|}{|x|}$$
-
-3. **SCST Reward**:
-   $$R(\theta) = \sum_{t=1}^T (r_t - b_t) \log P(y_t | x; \theta)$$
+- **Wait-K Policy Formula**:    $$g(t; k) = \min(k + t - 1, |Z|)$$
 
 ### c. SCST Fine-Tuning and RL Integration  
 - **Reward Function:** Optimized using BLEU and ROUGE metrics.  
 - **Policy Optimization:** RL agent trained via policy gradients.  
 - **Advantage Calculation:** Based on the difference between sampled and baseline rewards.
-
+- **SCST Reward Formula**:   $$R(\theta) = \sum_{t=1}^T (r_t - b_t) \log P(y_t | x; \theta)$$
+  
 ### d. Model Architecture and Optimization  
 - **Base Model:** LLaMA-7B fine-tuned with LoRA, supported by HMT for improved sequence prediction.  
 - **Optimization:** Adam optimizer with cross-entropy loss.  
@@ -44,7 +35,8 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 - **BLEU Score:** Measures translation quality using n-gram overlaps.  
 - **ROUGE-L Score:** Assesses informativeness and coverage.  
 - **Latency:** Quantified via read-write sequence length ratio.
-- 
+- **Latency Metric (AL)**:    $$AL = \frac{1}{\tau} \sum_{t=1}^\tau \left[g(t) - t - 1\right] \cdot \frac{|y|}{|x|}$$ 
+
 # Evaluation and Findings
 1. Dynamic Wait-k Policy significantly improved latency-quality trade-offs.  
 2. SCST Fine-Tuning optimized performance through reinforcement learning.  
