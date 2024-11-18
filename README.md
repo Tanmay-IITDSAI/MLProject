@@ -18,10 +18,17 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 ### b. Dynamic Wait-k Policy Implementation  
 - Utilized a **flexible wait-k strategy** to dynamically adjust latency based on remaining input length.  
 - Enhanced with HMT to predict sequence likelihoods, improving token generation decisions.  
-- Formula:  
-  \[
-  g(t; k) = \min(k + t - 1, |Z|)
-  \]
+
+## Mathematical Foundations
+
+1. **Wait-K Policy**:
+   $$g(t; k) = \min(k + t - 1, |Z|)$$
+
+2. **Latency Metric (AL)**:
+   $$AL = \frac{1}{\tau} \sum_{t=1}^\tau \left[g(t) - t - 1\right] \cdot \frac{|y|}{|x|}$$
+
+3. **SCST Reward**:
+   $$R(\theta) = \sum_{t=1}^T (r_t - b_t) \log P(y_t | x; \theta)$$
 
 ### c. SCST Fine-Tuning and RL Integration  
 - **Reward Function:** Optimized using BLEU and ROUGE metrics.  
