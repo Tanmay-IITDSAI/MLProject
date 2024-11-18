@@ -40,66 +40,98 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 # Mathematical Approach
 ## Hidden Markov Transformer (HMT) Basics
 
-The **Hidden Markov Transformer (HMT)** combines the principles of Hidden Markov Models (HMMs) and Transformers for sequence modeling. The key mathematical formulations are as follows:
+The Hidden Markov Transformer (HMT) combines the principles of Hidden Markov Models (HMMs) and Transformers for sequence modeling. The key mathematical formulations are as follows:
 
-### Joint Sequence Probability in HMT
-$$ P(X, Z) = P(Z) \prod_{t=1}^T P(x_t \mid z_t) $$
+## Joint Sequence Probability in HMT
+
+$$
+P(X, Z) = P(Z) \prod_{t=1}^T P(x_t \mid z_t)
+$$
 
 Where:
-- $$ \( X = (x_1, x_2, \dots, x_T) \) $$ : Observed sequence (e.g., source or target sequence),
-- $$ \( Z = (z_1, z_2, \dots, z_T) \) $$ : Hidden states (latent variables),
-- $$ \( P(Z) \) $$ : Transition probability between hidden states,
-- $$ \( P(x_t \mid z_t) \) $$ : Emission probability of observing  $$ \( x_t \) given \( z_t \) $$ .
 
-### Transformer Attention for Transition
+- \( X = (x_1, x_2, \dots, x_T) \): Observed sequence (e.g., source or target sequence),
+- \( Z = (z_1, z_2, \dots, z_T) \): Hidden states (latent variables),
+- \( P(Z) \): Transition probability between hidden states,
+- \( P(x_t \mid z_t) \): Emission probability of observing \( x_t \) given \( z_t \).
+
+## Transformer Attention for Transition
+
 The transition probability \( P(Z) \) is modeled using self-attention:
-$$ A_{ij} = \text{softmax} \left( \frac{Q_i K_j^\top}{\sqrt{d_k}} \right) $$
+
+$$
+A_{ij} = \text{softmax} \left( \frac{Q_i K_j^\top}{\sqrt{d_k}} \right)
+$$
 
 Where:
--  $$ \( Q, K, V \) $$ : Query, key, and value matrices for self-attention,
--  $$ \( d_k \) $$ : Dimensionality of the hidden states.
 
----
+- \( Q, K, V \): Query, key, and value matrices for self-attention,
+- \( d_k \): Dimensionality of the hidden states.
 
 ## Combined Objective for HMT with SCST and Dynamic Wait-k
 
-The overall objective integrates **Self-Critical Sequence Training (SCST)**, **HMT probabilities**, and the **Wait-k policy**.
+The overall objective integrates Self-Critical Sequence Training (SCST), HMT probabilities, and the Wait-k policy.
 
 ### HMT Loss
-$$ \mathcal{L}_{HMT} = \mathbb{E}_{Z} \left[ - \sum_{t=1}^T \log P(x_t \mid z_t) \right] $$
+
+$$
+\mathcal{L}_{\text{HMT}} = \mathbb{E}_Z \left[ - \sum_{t=1}^T \log P(x_t \mid z_t) \right]
+$$
 
 ### SCST Loss
+
 The SCST reward \( R(\theta) \) is computed as:
-$$ R(\theta) = \sum_{t=1}^T (r_t - b_t) \log P(y_t \mid x; \theta) $$
+
+$$
+R(\theta) = \sum_{t=1}^T (r_t - b_t) \log P(y_t \mid x; \theta)
+$$
 
 Where:
--  $$ \( r_t \) $$ : Reward at step  $$ \( t \) $$  (e.g., BLEU score),
--  $$ \( b_t \) $$ : Baseline reward (computed using greedy decoding).
+
+- \( r_t \): Reward at step \( t \) (e.g., BLEU score),
+- \( b_t \): Baseline reward (computed using greedy decoding).
 
 The SCST loss is:
-$$ \mathcal{L}_{SCST} = - \sum_{t=1}^T (r_t - b_t) \log P(y_t \mid x; \theta) $$
+
+$$
+\mathcal{L}_{\text{SCST}} = - \sum_{t=1}^T (r_t - b_t) \log P(y_t \mid x; \theta)
+$$
 
 ### Dynamic Wait-k Selection
+
 The Wait-k function dynamically determines the source tokens to read before decoding:
-$$ g(t; k) = \min(k + t - 1, |Z|) $$
+
+$$
+g(t; k) = \min(k + t - 1, |Z|)
+$$
 
 Where:
--  $$ \( k \) $$ : Number of source tokens to "wait",
--  $$ \( t \) $$ : Current decoding step,
--  $$ \( |Z| \) $$ : Length of the latent states.
+
+- \( k \): Number of source tokens to "wait",
+- \( t \): Current decoding step,
+- \( |Z| \): Length of the latent states.
 
 To optimize \( k \) based on translation quality and latency:
-$$ k^* = \arg\max_k \left[ \text{BLEU} - \alpha \cdot AL \right] $$
+
+$$
+k^* = \arg\max_k \left[ \text{BLEU} - \alpha \cdot AL \right]
+$$
 
 Where:
--  $$ \( AL = \frac{1}{\tau} \sum_{t=1}^\tau \left[g(t) - t - 1\right] \cdot \frac{|y|}{|x|} \) $$ 
-  is the Average Lagging (latency metric),
--  $$ \( \alpha \) $$ : Hyperparameter balancing quality and latency.
 
-### Final Combined Loss
-$$ \mathcal{L} = \mathcal{L}_{HMT} + \lambda \mathcal{L}_{SCST} $$
+$$
+AL = \frac{1}{\tau} \sum_{t=1}^\tau \left[g(t) - t - 1\right] \cdot \frac{|y|}{|x|}
+$$
 
-Where  $$ \( \lambda \) $$ is a weighting factor for reinforcement learning.
+is the Average Lagging (latency metric), and \( \alpha \) is a hyperparameter balancing quality and latency.
+
+## Final Combined Loss
+
+$$
+\mathcal{L} = \mathcal{L}_{\text{HMT}} + \lambda \mathcal{L}_{\text{SCST}}
+$$
+
+Where \( \lambda \) is a weighting factor for reinforcement learning.
 
 
 # Evaluation and Findings
