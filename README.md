@@ -44,5 +44,22 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 4. LoRA-enhanced LLaMA model ensured resource-efficient translations.  
 5. BLEU and ROUGE scores provided robust evaluation metrics.
 
+## References
+
+- **Zhang, S., & Feng, Y. (2021).**  
+  *Universal Simultaneous Machine Translation with Mixture-of-Experts Wait-k Policy.*  
+  Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing, pp. 7306–7317.  
+  [Available here](https://aclanthology.org/2021.emnlp-main.584/)
+
+- **Gu, J., et al. (2017).**  
+  *Learning to translate in real-time with neural machine translation.*  
+  Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics.  
+  [Available here](https://aclanthology.org/E17-1099)
+
+- **Grissom II, A., He, H., Boyd-Graber, J., Morgan, J., & Daumé III, H. (2014).**  
+  *Don’t Until the Final Verb Wait: Reinforcement Learning for Simultaneous Machine Translation.*  
+  Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP), pp. 1342–1352.  
+  [Available here](https://aclanthology.org/D14-1140/)
+
 # Pending Tasks & Challenges
 * The method is subject to change using PyTorch or Tensorflow, as the project is under progress.
