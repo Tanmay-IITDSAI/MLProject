@@ -62,4 +62,4 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
   [Available here](https://aclanthology.org/D14-1140/)
 
 # Pending Tasks & Challenges
-* The method is subject to change using PyTorch or Tensorflow, as the project is under progress.
+We are diligently working on implementing the project, leveraging the latest advancements in simultaneous machine translation, including the Mixture-of-Experts approach and the dynamic Wait-k policy. While we strive to achieve the best possible outcomes, we acknowledge that the code and methodology are still evolving. As we proceed, there may be adjustments to our approach based on practical challenges, insights gained during experimentation, and efforts to optimize performance. Our aim is to ensure that the final implementation aligns with the project objectives while maintaining flexibility for improvements.
