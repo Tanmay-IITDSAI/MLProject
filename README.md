@@ -50,10 +50,10 @@ $$
 
 Where:
 
-- \( X = (x_1, x_2, \dots, x_T) \): Observed sequence (e.g., source or target sequence),
-- \( Z = (z_1, z_2, \dots, z_T) \): Hidden states (latent variables),
-- \( P(Z) \): Transition probability between hidden states,
-- \( P(x_t \mid z_t) \): Emission probability of observing \( x_t \) given \( z_t \).
+- `X = (x_1, x_2, ..., x_T)`: Observed sequence (e.g., source or target sequence)
+- `Z = (z_1, z_2, ..., z_T)`: Hidden states (latent variables)
+- `P(Z)`: Transition probability between hidden states
+- `P(x_t | z_t)`: Emission probability of observing `x_t` given `z_t`
 
 ## Transformer Attention for Transition
 
