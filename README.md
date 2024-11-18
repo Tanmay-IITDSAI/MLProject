@@ -49,7 +49,7 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 - **Zhang, S., & Feng, Y. (2021).**  
   *Universal Simultaneous Machine Translation with Mixture-of-Experts Wait-k Policy.*  
   Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing, pp. 7306–7317.  
-  [Available here](https://aclanthology.org/2021.emnlp-main.584/)
+  [Available here](https://aclanthology.org/2021.emnlp-main.581/)
 
 - **Gu, J., et al. (2017).**  
   *Learning to translate in real-time with neural machine translation.*  
