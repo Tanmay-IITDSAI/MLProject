@@ -11,8 +11,7 @@ This repo contains (high level):
 - `MLProject_pytorch+SCST+SiMT.ipynb` — primary notebook with model code, experiments and walkthroughs.  
 - `HMT-SiLLM_2.py` — Python script(s) related to HMT / SiLLM experiments.  
 - `requirement.txt` — Python package dependencies.  
-- `test_dataset.json` — example dataset format (input → target pairs).  
-- `Phase2_ML.zip` — additional assets / zipped code referenced by scripts.  
+- `test_dataset.json` — example dataset format (input → target pairs).   
 - `*.pdf` — project writeups and mathematical notes.
 
 # Project Objectives  
@@ -55,6 +54,53 @@ This repo contains (high level):
 3. HMT Integration enhanced real-time adaptability.  
 4. LoRA-enhanced LLaMA model ensured resource-efficient translations.  
 5. BLEU and ROUGE scores provided robust evaluation metrics.
+
+## Quick start
+
+> Recommended: Linux/macOS with a GPU. Use a virtual environment to avoid dependency conflicts.
+
+1. Clone
+```bash
+git clone https://github.com/Tanmay-IITDSAI/MLProject.git
+cd MLProject
+
+## Create & activate a virtual env (optional but recommended)
+python -m venv venv
+# macOS / Linux
+source venv/bin/activate
+# Windows (PowerShell)
+.\venv\Scripts\Activate.ps1
+
+
+pip install -r requirement.txt
+
+jupyter notebook MLProject_pytorch+SCST+SiMT.ipynb
+
+Typical workflow
+
+Run the notebook to reproduce small-scale experiments and understand data preprocessing & training loops.
+
+Prepare/convert your dataset to the same JSON format as test_dataset.json. Tokenization and batching details are in the notebook/scripts.
+
+Use the provided scripts (e.g. HMT-SiLLM_2.py) for training or evaluation — inspect the script headers to find CLI arguments.
+
+Optionally perform SCST fine-tuning (reinforcement learning) using the reward functions (BLEU/ROUGE/latency) described in the notebook and project docs.
+
+Evaluate with BLEU / ROUGE and latency metrics (Average Lagging or other AL-style metrics).
+
+Notes on large models & LoRA
+
+The repo mentions experiments with LLaMA-7B and LoRA. Large model weights (e.g. LLaMA) are not included — obtain them via the appropriate channels and follow license/usage restrictions.
+
+LoRA adapters are lightweight, but training still benefits from GPU(s) and may require multi-GPU or mixed precision.
+
+Files to inspect first
+
+MLProject_pytorch+SCST+SiMT.ipynb — start here to understand the pipeline, hyperparameters, and how datasets are loaded.
+
+requirement.txt — verify package versions and install any missing dependencies.
+
+HMT-SiLLM_2.py — look for main/train/eval functions and CLI arguments.
 
 ## References
 
