@@ -16,7 +16,6 @@ This repo contains (high level):
 
 ## Table of contents
 
-* [Summary](#summary)
 * [Workflow](#workflow)
 * [Key contributions](#key-contributions)
 * [Repository structure (high level)](#repository-structure-high-level)
