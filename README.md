@@ -28,7 +28,7 @@ This repo contains (high level):
 * [Known issues & caveats](#known-issues--caveats)
 * [Reproducibility tips](#reproducibility-tips)
 * [Contributing](#contributing)
-* [License & contact](#license--contact)
+* [References](#References)
 
 ---
 
