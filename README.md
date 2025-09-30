@@ -1,4 +1,4 @@
-# MLProject — Adaptive Wait-k Policy for Simultaneous Text-to-Text Machine Translation
+# MLProject - Adaptive Wait-k Policy for Simultaneous Text-to-Text Machine Translation
 
 Simultaneous Machine Translation (SiMT) aims to generate translations simultaneously with the reading of the source sentence, balancing translation quality with latency. Most SiMT models currently require training multiple models for different latency levels, thus increasing computational costs and, more importantly, limiting flexibility. The new approach is, like Mixture- of-Experts Wait-k policy, training multiple wait-k values in balance between the considerations of both latency and translation quality, leaving the determination of the optimal value of k for unseen data as an open challenge. Moreover, variability in the structure of structure between different languages makes the problem even more complicated because the application of a fixed policy becomes rather ineffective.
 
@@ -173,15 +173,6 @@ jupyter nbconvert --to notebook --execute MLProject_pytorch+SCST+SiMT.ipynb --ou
 * **Quality:** BLEU, SacreBLEU, ROUGE (where applicable), and human/LLM judgments.
 * **Latency:** Average Lagging (AL), Average Proportion (AP), and other simultaneous translation metrics.
 * **Reward design:** SCST optimises a composite reward (e.g., BLEU − λ × latency). The notebook contains examples of reward formulations and hyperparameters.
-
----
-
-## Known issues & caveats
-
-* Some scripts expect files inside `Phase2_ML.zip`. Extract the archive before running and verify paths.
-* Path / config mismatches (relative vs absolute) are the most common errors — adjust top‑of‑script paths or CLI flags.
-* Large model experiments require significant VRAM; if you don’t have it, switch to smaller models or use LoRA.
-* Checkpoint formats may vary; if loading fails, inspect the saved state dict and model class.
 
 ---
 
