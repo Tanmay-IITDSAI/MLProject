@@ -14,10 +14,23 @@ This repo contains (high level):
 - `test_dataset.json` — example dataset format (input → target pairs).   
 - `*.pdf` — project writeups and mathematical notes.
 
-# Project Objectives  
-* Develop a Dynamic Wait-k Policy that adaptively balances latency and quality in real-time.
-* Integrate Self-Critical Sequence Training (SCST) to optimize the quality-latency trade-off using reinforcement learning.
-* Evaluate translation quality using BLEU and ROUGE metrics while minimizing latency.
+## Table of contents
+
+* [Summary](#summary)
+* [Key contributions](#key-contributions)
+* [Repository structure (high level)](#repository-structure-high-level)
+* [Requirements](#requirements)
+* [Quick start](#quick-start)
+* [Typical workflow](#typical-workflow)
+* [Example commands](#example-commands)
+* [Large models & LoRA notes](#large-models--lora-notes)
+* [Evaluation & metrics](#evaluation--metrics)
+* [Known issues & caveats](#known-issues--caveats)
+* [Reproducibility tips](#reproducibility-tips)
+* [Contributing](#contributing)
+* [License & contact](#license--contact)
+
+---
 
 # Workflow
 
@@ -57,42 +70,12 @@ This repo contains (high level):
 
 ---
 
-## Table of contents
-
-* [Summary](#summary)
-* [Key contributions](#key-contributions)
-* [Repository structure (high level)](#repository-structure-high-level)
-* [Requirements](#requirements)
-* [Quick start](#quick-start)
-* [Typical workflow](#typical-workflow)
-* [Example commands](#example-commands)
-* [Large models & LoRA notes](#large-models--lora-notes)
-* [Evaluation & metrics](#evaluation--metrics)
-* [Known issues & caveats](#known-issues--caveats)
-* [Reproducibility tips](#reproducibility-tips)
-* [Contributing](#contributing)
-* [License & contact](#license--contact)
-
----
-
 ## Key contributions
 
 * Adaptive Wait‑k implementation (dynamic wait decisions based on state/features).
 * SCST (reinforcement learning) fine‑tuning to directly optimise quality‑latency reward.
 * Integration of HMT building blocks and LoRA adapters for parameter‑efficient fine‑tuning of large models.
 * End‑to‑end notebooks and scripts for training, evaluation and analysis.
-
----
-
-## Repository structure (high level)
-
-* `MLProject_pytorch+SCST+SiMT.ipynb` — primary Jupyter notebook with walkthroughs, model code and experiments.
-* `HMT-SiLLM_2.py` — training / evaluation script(s) for HMT / SiLLM experiments (CLI driven).
-* `requirement.txt` — Python dependency list.
-* `test_dataset.json` — small example dataset (input → target pairs) to test the pipeline.
-* `Phase2_ML.zip` — additional assets referenced by the scripts (check and extract before use).
-* `*.pdf` — project writeups and technical notes.
-* `checkpoints/` — (recommended) directory to store model checkpoints and best models.
 
 ---
 
