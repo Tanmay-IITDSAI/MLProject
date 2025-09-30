@@ -17,6 +17,7 @@ This repo contains (high level):
 ## Table of contents
 
 * [Summary](#summary)
+* [Workflow](#workflow)
 * [Key contributions](#key-contributions)
 * [Repository structure (high level)](#repository-structure-high-level)
 * [Requirements](#requirements)
@@ -25,7 +26,6 @@ This repo contains (high level):
 * [Example commands](#example-commands)
 * [Large models & LoRA notes](#large-models--lora-notes)
 * [Evaluation & metrics](#evaluation--metrics)
-* [Known issues & caveats](#known-issues--caveats)
 * [Reproducibility tips](#reproducibility-tips)
 * [Contributing](#contributing)
 * [References](#References)
