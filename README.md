@@ -192,6 +192,7 @@ Contributions, issues and PRs are welcome. Suggested improvements:
 * Add robust CLI docs and a configuration system (e.g., Hydra / OmegaConf).
 * Add unit tests for data preprocessing and evaluation metrics.
 * Integrate a lightweight experiment management (Weights & Biases, MLflow) for reproducibility.
+* Use HMT Transformer for further analyis with Adaptive Wait K policy (repo hadn't included the requirement file)
 ---
 
 ## References
@@ -211,6 +212,3 @@ Contributions, issues and PRs are welcome. Suggested improvements:
   Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP), pp. 1342–1352.  
   [Available here](https://aclanthology.org/D14-1140/)
 
-# Pending Tasks & Challenges
-We are diligently working on implementing the project, leveraging the latest advancements in simultaneous machine translation, including the Mixture-of-Experts approach and the dynamic Wait-k policy. While we strive to achieve the best possible outcomes, we acknowledge that the code and methodology are still evolving. As we proceed, there may be adjustments to our approach based on practical challenges, insights gained during experimentation, and efforts to optimize performance. Our aim is to ensure that the final implementation aligns with the project objectives while maintaining flexibility for improvements.
-I also found that the code does not seem to work properly as some part of the code or requirement is missing to run the code though the paper explained everything. 
