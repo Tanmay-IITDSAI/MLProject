@@ -4,6 +4,17 @@ Simultaneous Machine Translation (SiMT) aims to generate translations simultaneo
 
 * Base Model: The project will utilize the Mixture-of-Experts Wait-k policy as the backbone model. This policy allows each head of the multi-head attention mechanism to perform translation with different levels of latency.
 
+## Contents
+
+This repo contains (high level):
+
+- `MLProject_pytorch+SCST+SiMT.ipynb` — primary notebook with model code, experiments and walkthroughs.  
+- `HMT-SiLLM_2.py` — Python script(s) related to HMT / SiLLM experiments.  
+- `requirement.txt` — Python package dependencies.  
+- `test_dataset.json` — example dataset format (input → target pairs).  
+- `Phase2_ML.zip` — additional assets / zipped code referenced by scripts.  
+- `*.pdf` — project writeups and mathematical notes.
+
 # Project Objectives  
 * Develop a Dynamic Wait-k Policy that adaptively balances latency and quality in real-time.
 * Integrate Self-Critical Sequence Training (SCST) to optimize the quality-latency trade-off using reinforcement learning.
