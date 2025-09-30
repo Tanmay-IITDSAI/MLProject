@@ -1,5 +1,5 @@
-# MLProject 
-### Under Guidance of: Dr. Rajesh Kumar Mundotiya
+# MLProject — Adaptive Wait-k Policy for Simultaneous Text-to-Text Machine Translation
+
 Simultaneous Machine Translation (SiMT) aims to generate translations simultaneously with the reading of the source sentence, balancing translation quality with latency. Most SiMT models currently require training multiple models for different latency levels, thus increasing computational costs and, more importantly, limiting flexibility. The new approach is, like Mixture- of-Experts Wait-k policy, training multiple wait-k values in balance between the considerations of both latency and translation quality, leaving the determination of the optimal value of k for unseen data as an open challenge. Moreover, variability in the structure of structure between different languages makes the problem even more complicated because the application of a fixed policy becomes rather ineffective.
 
 * Base Model: The project will utilize the Mixture-of-Experts Wait-k policy as the backbone model. This policy allows each head of the multi-head attention mechanism to perform translation with different levels of latency.
@@ -55,52 +55,170 @@ This repo contains (high level):
 4. LoRA-enhanced LLaMA model ensured resource-efficient translations.  
 5. BLEU and ROUGE scores provided robust evaluation metrics.
 
+---
+
+## Table of contents
+
+* [Summary](#summary)
+* [Key contributions](#key-contributions)
+* [Repository structure (high level)](#repository-structure-high-level)
+* [Requirements](#requirements)
+* [Quick start](#quick-start)
+* [Typical workflow](#typical-workflow)
+* [Example commands](#example-commands)
+* [Large models & LoRA notes](#large-models--lora-notes)
+* [Evaluation & metrics](#evaluation--metrics)
+* [Known issues & caveats](#known-issues--caveats)
+* [Reproducibility tips](#reproducibility-tips)
+* [Contributing](#contributing)
+* [License & contact](#license--contact)
+
+---
+
+## Key contributions
+
+* Adaptive Wait‑k implementation (dynamic wait decisions based on state/features).
+* SCST (reinforcement learning) fine‑tuning to directly optimise quality‑latency reward.
+* Integration of HMT building blocks and LoRA adapters for parameter‑efficient fine‑tuning of large models.
+* End‑to‑end notebooks and scripts for training, evaluation and analysis.
+
+---
+
+## Repository structure (high level)
+
+* `MLProject_pytorch+SCST+SiMT.ipynb` — primary Jupyter notebook with walkthroughs, model code and experiments.
+* `HMT-SiLLM_2.py` — training / evaluation script(s) for HMT / SiLLM experiments (CLI driven).
+* `requirement.txt` — Python dependency list.
+* `test_dataset.json` — small example dataset (input → target pairs) to test the pipeline.
+* `Phase2_ML.zip` — additional assets referenced by the scripts (check and extract before use).
+* `*.pdf` — project writeups and technical notes.
+* `checkpoints/` — (recommended) directory to store model checkpoints and best models.
+
+---
+
+## Requirements
+
+* Python 3.8+
+* GPU recommended (NVIDIA CUDA) for model fine‑tuning.
+* Key Python libraries (suggested): `torch`, `transformers`, `datasets`, `sacrebleu`, `sentencepiece` (if using byte‑pair tokenizers), `accelerate` (optional), `einops`, `numpy`, `tqdm`.
+
+Install example:
+
+```bash
+python -m pip install -r requirement.txt
+```
+
+If you use LoRA code from `peft` or `loralib`, install those packages as well (see `requirement.txt`).
+
+---
+
 ## Quick start
 
-> Recommended: Linux/macOS with a GPU. Use a virtual environment to avoid dependency conflicts.
+1. Clone the repository and enter the folder:
 
-1. Clone
 ```bash
 git clone https://github.com/Tanmay-IITDSAI/MLProject.git
 cd MLProject
+```
 
-## Create & activate a virtual env (optional but recommended)
+2. Create & activate a virtual environment (optional but recommended):
+
+```bash
 python -m venv venv
 # macOS / Linux
 source venv/bin/activate
 # Windows (PowerShell)
 .\venv\Scripts\Activate.ps1
-
-
 pip install -r requirement.txt
+```
 
+3. Inspect the example dataset:
+
+```bash
+less test_dataset.json
+# or open in your editor / notebook
+```
+
+4. Open and run the main notebook:
+
+```bash
 jupyter notebook MLProject_pytorch+SCST+SiMT.ipynb
+```
 
-Typical workflow
+The notebook walks through data loading, scalar/sequence metrics, model training (baseline), SCST fine‑tuning, and evaluation.
 
-Run the notebook to reproduce small-scale experiments and understand data preprocessing & training loops.
+---
 
-Prepare/convert your dataset to the same JSON format as test_dataset.json. Tokenization and batching details are in the notebook/scripts.
+## Typical workflow
 
-Use the provided scripts (e.g. HMT-SiLLM_2.py) for training or evaluation — inspect the script headers to find CLI arguments.
+1. Inspect / preprocess dataset; convert to the expected JSON format (list of `{"src":..., "tgt":...}` pairs).
+2. Train a baseline simultaneous model or configure a pre‑trained model for online decoding.
+3. Run adaptive Wait‑k policy training (supervised / imitation learning stage).
+4. Apply SCST for reward‑based fine‑tuning to trade off BLEU vs latency.
+5. Evaluate with BLEU/ROUGE and latency metrics (Average Lagging, Consecutive Waits, etc.).
+6. Optionally apply LoRA adapters and re‑run experiments with large models.
 
-Optionally perform SCST fine-tuning (reinforcement learning) using the reward functions (BLEU/ROUGE/latency) described in the notebook and project docs.
+---
 
-Evaluate with BLEU / ROUGE and latency metrics (Average Lagging or other AL-style metrics).
+## Example commands
 
-Notes on large models & LoRA
+These commands are illustrative — check each script's `--help` for exact flags.
 
-The repo mentions experiments with LLaMA-7B and LoRA. Large model weights (e.g. LLaMA) are not included — obtain them via the appropriate channels and follow license/usage restrictions.
+```bash
+# Run a training script (small-scale demo)
+python HMT-SiLLM_2.py --data test_dataset.json --epochs 5 --batch_size 16 --lr 1e-4 --save_dir checkpoints/demo
 
-LoRA adapters are lightweight, but training still benefits from GPU(s) and may require multi-GPU or mixed precision.
+# Evaluate a saved checkpoint
+python evaluate.py --model checkpoints/demo/best.pt --test_data test_dataset.json --metrics bleu,avg_lagging
 
-Files to inspect first
+# Run the notebook non-interactively (NBConvert) to execute cells
+jupyter nbconvert --to notebook --execute MLProject_pytorch+SCST+SiMT.ipynb --output executed.ipynb
+```
 
-MLProject_pytorch+SCST+SiMT.ipynb — start here to understand the pipeline, hyperparameters, and how datasets are loaded.
+---
 
-requirement.txt — verify package versions and install any missing dependencies.
+## Large models & LoRA notes
 
-HMT-SiLLM_2.py — look for main/train/eval functions and CLI arguments.
+* The repo references experiments with large models (e.g., LLaMA family). **Model weights are not included** — obtain them separately and ensure you follow licensing requirements.
+* LoRA (Low‑Rank Adaptation) adapters are used to limit the number of trainable parameters. This is helpful when fine‑tuning large models on limited hardware.
+* For LoRA training: use mixed precision (AMP), gradient accumulation and multi‑GPU if available.
+
+---
+
+## Evaluation & metrics
+
+* **Quality:** BLEU, SacreBLEU, ROUGE (where applicable), and human/LLM judgments.
+* **Latency:** Average Lagging (AL), Average Proportion (AP), and other simultaneous translation metrics.
+* **Reward design:** SCST optimises a composite reward (e.g., BLEU − λ × latency). The notebook contains examples of reward formulations and hyperparameters.
+
+---
+
+## Known issues & caveats
+
+* Some scripts expect files inside `Phase2_ML.zip`. Extract the archive before running and verify paths.
+* Path / config mismatches (relative vs absolute) are the most common errors — adjust top‑of‑script paths or CLI flags.
+* Large model experiments require significant VRAM; if you don’t have it, switch to smaller models or use LoRA.
+* Checkpoint formats may vary; if loading fails, inspect the saved state dict and model class.
+
+---
+
+## Reproducibility tips
+
+* Fix random seeds (`numpy`, `torch`, `random`) and log seed values in run configs.
+* Pin package versions in `requirement.txt` (or provide an `environment.yml`).
+* Use smaller subsets for debugging and only scale up after pipeline correctness is verified.
+* Save model checkpoints, training logs and hyperparameter configs alongside results.
+
+---
+
+## Contributing
+
+Contributions, issues and PRs are welcome. Suggested improvements:
+
+* Add robust CLI docs and a configuration system (e.g., Hydra / OmegaConf).
+* Add unit tests for data preprocessing and evaluation metrics.
+* Integrate a lightweight experiment management (Weights & Biases, MLflow) for reproducibility.
+---
 
 ## References
 
